@@ -3,7 +3,8 @@
 <link rel="import" href="../iron-flex-layout/classes/iron-flex-layout.html">
 <link rel="import" href="../paper-material/paper-material.html">
 <link rel="import" href="../paper-styles/paper-styles-classes.html">
-<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../paper-fab/paper-fab.html">
 
 <link rel="import" href="../wid-card-standard-behavior/wid-card-standard-behavior.html">
 <link rel="import" href="../wid-card-weight-behavior/wid-card-weight-behavior.html">
@@ -34,8 +35,27 @@ Example:
       paper-material {
         overflow-y: auto;
         height: 100%;
+        background-color: #fff;
       }
 
+      .odd {
+        background-color: #f5f3f1;
+      }
+
+      .scale-icon {
+        max-height: 24px;
+      }
+
+      
+      paper-fab.green {
+        --paper-fab-background: #4caf50;
+        --paper-fab-keyboard-focus-background: var(--paper-green-900);
+      }
+
+      paper-fab.red {
+        --paper-fab-background: #f44336;
+        --paper-fab-keyboard-focus-background: var(--paper-red-900);
+      }
     </style>
 
     <div id="websockets">
@@ -48,6 +68,13 @@ Example:
     </div>    
 
     <paper-material class="layout vertical flex" elevation="3">
+      <template is="dom-repeat" items="[[engines]]" as="engine">
+        <div class$="{{_rowClass(index)}}">
+          <div class="flex layout horizontal center-center"><iron-icon class="scale-icon" src="{{_iconPath(engine.icon)}}"></iron-icon></div>
+          <div class="flex-4">{{engine.name}}</div>
+          <div class="flex"><paper-fab mini icon="" class$="{{_statusClass(1)}}"></paper-fab></div>
+        </div>
+      </template>
     </paper-material>
    
   </template>
@@ -62,11 +89,47 @@ Example:
 
       is: 'wid-card-service-list',
 
+      behaviors: [Polymer.WidCardStandardBehavior, Polymer.WidCardWeightBehavior, Polymer.WidCardSubscriptionsBehavior],
+
       properties: {
+        /**
+         * engines
+         * @type {Object}
+         */
+        engines: {
+          type: Object
+        },
 
+        /**
+         * status
+         * @type {Object}
+         */
+        status: {
+          type: Object
+        }
 
+      },
+
+      _rowClass: function(index) {
+        let odd = '';
+        if (index % 2 === 0) {
+          odd = 'odd';
+        }
+        return odd + ' flex layout horizontal center-center';
+      },
+
+      _statusClass: function(status) {
+        if (status === 1) {
+          return 'green';
+        }
+        else {
+          return 'red';
+        }
+      },
+
+      _iconPath: function(value) {
+        return '/images/cards/' + value;
       }
-
      
     });
 
