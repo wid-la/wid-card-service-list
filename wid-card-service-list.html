@@ -8,6 +8,7 @@
 
 <link rel="import" href="../wid-card-standard-behavior/wid-card-standard-behavior.html">
 <link rel="import" href="../wid-card-weight-behavior/wid-card-weight-behavior.html">
+<link rel="import" href="../wid-card-theme-behavior/wid-card-theme-behavior.html">
 <link rel="import" href="../wid-versatile-websocket/wid-versatile-websocket.html">
 <link rel="import" href="../wid-card-subscriptions-behavior/wid-card-subscriptions-behavior.html">
 
@@ -36,6 +37,7 @@ Example:
         overflow-y: auto;
         height: 100%;
         background-color: #fff;
+        overflow: visible;
       }
 
       .odd {
@@ -67,7 +69,7 @@ Example:
       </template>
     </div>    
 
-    <paper-material class="layout vertical flex" elevation="3">
+    <paper-material id="mainContent" class="layout vertical flex" elevation="3">
       <template is="dom-repeat" items="[[engines]]" as="engine">
         <div class$="{{_rowClass(index)}}">
           <div class="flex layout horizontal center-center"><iron-icon class="scale-icon" src="{{_iconPath(engine.icon)}}"></iron-icon></div>
